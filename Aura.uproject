@@ -11,10 +11,6 @@
 			"AdditionalDependencies": [
 				"Engine"
 			]
-		},
-		{
-			"Name": "EnhancedInput",
-			"Type": "Runtime"
 		}
 	],
 	"Plugins": [
