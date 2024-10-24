@@ -4,18 +4,28 @@
 #include "UI/HUD/AuraHUD.h"
 
 #include "UI/Widget/AuraUserWidget.h"
+#include "UI/WidgetController/OverlayWidgetController.h"
 
-void AAuraHUD::BeginPlay()
+UOverlayWidgetController* AAuraHUD::GetOverlayWidgetController(const FWidgetControllerParams& WidgetControllerParams)
 {
-	Super::BeginPlay();
+	if (OverlayWidgetController == nullptr)
+	{
+		OverlayWidgetController = NewObject<UOverlayWidgetController>(this, OverlayWidgetControllerClass);
+		OverlayWidgetController->SetWidgetControllerParams(WidgetControllerParams);
+	}
+	return OverlayWidgetController;
+}
 
-	if (OverlayWidgetClass)
-	{
-		OverlayWidget = CreateWidget<UAuraUserWidget>(GetOwningPlayerController(), OverlayWidgetClass);
-	}
-	if (OverlayWidget)
-	{
-		OverlayWidget->AddToViewport();
-	}
+void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS)
+{
+	checkf(OverlayWidgetClass, TEXT("Overlay Widget Class Uninitialized, please fill out BP_AuraHUD"))
+	checkf(OverlayWidgetControllerClass, TEXT("Overlay Widget Controller Class uninitialized, please fill out BP_AuraHUD"))
+	OverlayWidget = CreateWidget<UAuraUserWidget>(GetOwningPlayerController(), OverlayWidgetClass);
+
+	const FWidgetControllerParams WidgetControllerParams(PC, PS, ASC, AS);
+	UOverlayWidgetController* WidgetController = GetOverlayWidgetController(WidgetControllerParams);
+
+	OverlayWidget->SetWidgetController(WidgetController);
 	
+	OverlayWidget->AddToViewport();
 }

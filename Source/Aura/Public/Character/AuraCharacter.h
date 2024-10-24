@@ -24,5 +24,5 @@ public:
 protected:
 
 private:
-	void InitAbilityActorInfo();	
+	void InitAbilityActorInfo();
 };
