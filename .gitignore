@@ -8,6 +8,7 @@ Build
 .vscode
 .vs
 .vsconfig
+*.user
 *.VC.db
 *.opensdf
 *.opendb

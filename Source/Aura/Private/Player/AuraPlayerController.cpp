@@ -69,7 +69,7 @@ void AAuraPlayerController::CursorTrace()
 	if (!CursorHit.bBlockingHit) return;
 	
 	LastActor = CurrentActor;
-	CurrentActor = Cast<IEnemyInterface>(CursorHit.GetActor());
+	CurrentActor = CursorHit.GetActor();
 
 	if (LastActor == nullptr)
 	{
